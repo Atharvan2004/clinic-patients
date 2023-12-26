@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "start": "node index.js",
+    "client": "cd .\\client && npm run dev",
     "initiate": "cd .\\client && npm run build && cd .. && npm run dev"
   },
   "type":"module",
