@@ -1,5 +1,6 @@
 import express from "express";
 import { conn } from "./models/conn.js"
+import cors from "cors"
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import { PRouter } from "./routes/patientRoute.js";
@@ -15,16 +16,17 @@ const app = express();
 
 await conn();
 app.use(express.json());
+app.use(cors());
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const port = 3000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-app.get("*",(req,res)=>{
-    res.sendFile("index.html",{root:__dirname})
+app.get("*", (req, res) => {
+    res.sendFile("C:\\Users\\athar\\Codes\\clinic-patients\\client\\index.html")
 });
 
-app.use("/patient",PRouter);
+app.use("/patient", PRouter);
