@@ -14,7 +14,7 @@ async function findPatientByQuery(query) {
         
         // Check if the product was found
         if (patients.length == 0) {
-            return "No patients found"
+            return undefined
         } else
             return patients;
     } catch (error) {

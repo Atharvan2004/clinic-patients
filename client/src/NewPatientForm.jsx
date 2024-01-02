@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { TextField, Button, Paper, Typography, Grid, Container } from '@mui/material';
+import axios from 'axios';
 
 const NewPatientForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     address: '',
     phone: '',
-    age: '',
+    age: "",
     occupation: '',
   });
 
@@ -17,14 +18,15 @@ const NewPatientForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    const response = await axios.post('http://localhost:3000/patient/newPatient',{formData});
     // Handle form submission logic here
-    console.log('Form submitted:', formData);
+    console.log('Form submitted:', response);
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <><Typography variant="h4" align='center' marginTop={"20px"} color={'primary'} fontWeight={"bold"}>Welcome</Typography><Container component="main" maxWidth="xs">
       <Paper elevation={3} style={{ padding: '20px', marginTop: '20px' }}>
         <Typography variant="h5" align="center" gutterBottom>
           New Patient Form
@@ -39,8 +41,7 @@ const NewPatientForm = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                required
-              />
+                required />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -50,8 +51,7 @@ const NewPatientForm = () => {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                required
-              />
+                required />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -61,19 +61,18 @@ const NewPatientForm = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                required
-              />
+                required />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 label="Age"
+                type='number'
                 fullWidth
                 variant="outlined"
                 name="age"
                 value={formData.age}
                 onChange={handleChange}
-                required
-              />
+                required />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -83,8 +82,7 @@ const NewPatientForm = () => {
                 name="occupation"
                 value={formData.occupation}
                 onChange={handleChange}
-                required
-              />
+                required />
             </Grid>
             <Grid item xs={12}>
               <Button type="submit" fullWidth variant="contained" color="primary">
@@ -94,7 +92,7 @@ const NewPatientForm = () => {
           </Grid>
         </form>
       </Paper>
-    </Container>
+    </Container></>
   );
 };
 

@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 import { styled, useTheme,alpha } from "@mui/material/styles"; 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -21,14 +22,15 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import SearchIcon from '@mui/icons-material/Search';
 import { Button, Link } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
+const searchResultList=[]
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -115,6 +117,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [searchValue, setSearchValue] = React.useState('');
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -122,6 +126,20 @@ export default function PersistentDrawerLeft() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/patient/getPatient', { query: searchValue });
+      // Handle the response as needed
+      await searchResultList.push(response.data.patientList);
+      
+      navigate("/search");
+
+    } catch (error) {
+      // Handle errors
+      console.error('Error during search:', error);
+    }
   };
 
   return (
@@ -146,9 +164,18 @@ export default function PersistentDrawerLeft() {
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
+        placeholder="Search…"
+        inputProps={{ "aria-label": "search" }}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault(); // Prevents the default behavior of the Enter key (form submission)
+            handleSearch(); // Define a function to handle the search
+          }
+        }}
+
+      />
         </Search>
         </Toolbar>
       </AppBar>
@@ -197,3 +224,5 @@ export default function PersistentDrawerLeft() {
     </Box>
   );
 }
+
+export {searchResultList}
