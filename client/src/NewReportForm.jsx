@@ -134,7 +134,7 @@ export default function CustomizedAccordions() {
     }
   };
   let {patientId}=useParams();
-  console.log(patientId)
+  
   
 
   const handleSubmit = async (e) => {

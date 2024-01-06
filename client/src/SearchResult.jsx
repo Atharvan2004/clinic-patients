@@ -6,9 +6,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 export default function SearchResult({ personList }) {
-  
-  if (!personList) {
-    return <Typography variant="body1" margin={"10px"}>Error in searching, please search again...</Typography>;
+  console.log(personList)
+  if (!personList || personList.length==0 || personList[0]==undefined) {
+    return <Typography style={{color:"#ff8383"}} variant="body1" margin={"10px"}>No patients found, go to home page and please search again...</Typography>;
   } else {
     return (
       <>
@@ -17,6 +17,7 @@ export default function SearchResult({ personList }) {
           gutterBottom
           marginLeft={"18px"}
           marginBottom={"10px"}
+          style={{color:"#1fdd1f"}}
         >
           {personList[0].length} matching results...
         </Typography>

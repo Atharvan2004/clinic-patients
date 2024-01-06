@@ -195,6 +195,7 @@ const getPatientDetails = asyncErrorHandler(async (req, res) => {
             await reportList.push(reportData);
 
         }))
+        console.log(reportList.length)
         res.status(201).json({
             success: true,
             patient,

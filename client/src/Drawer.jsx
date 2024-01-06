@@ -203,7 +203,7 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
-          {[{text:"New Patient",href:"/newPatient"}, {text:"Starred",href:"/new"}, {text:"Send email",href:"/new"}, {text:"Drafts",href:"/new"}].map(({text,href}, index) => (
+          {[{text:"Home",href:"/"}, {text:"Starred",href:"/"}, {text:"Send email",href:"/new"}, {text:"Drafts",href:"/new"}].map(({text,href}, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton component="a" href={href}>
                 <ListItemIcon>
