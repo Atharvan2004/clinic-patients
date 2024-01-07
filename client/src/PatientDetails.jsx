@@ -123,7 +123,7 @@ function ReportDetails({ report }) {
                 return (
                   <Typography
                     key={field}
-                    style={{ fontSize: "small", fontFamily: "cursive"}}
+                    style={{ fontSize: "small", fontFamily: "Gill Sans"}}
                     variant="body1"
                   >
                     {field.charAt(0).toUpperCase() + field.slice(1)}:{" "}
