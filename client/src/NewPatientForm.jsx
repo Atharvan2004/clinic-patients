@@ -24,6 +24,7 @@ const NewPatientForm = () => {
     // Handle form submission logic here
     alert("Patient Created")
     console.log('Form submitted:', response);
+    window.location.reload();
   };
 
   return (
