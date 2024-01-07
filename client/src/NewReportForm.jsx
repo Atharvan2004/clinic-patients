@@ -142,7 +142,7 @@ export default function CustomizedAccordions() {
     
     try {
       const response = await axios.post(
-        `http://localhost:3000/patient/createReport/new/${patientId}`,
+        process.env.BASE_URL+`/patient/createReport/new/${patientId}`,
         { formData },
         {
           headers: {

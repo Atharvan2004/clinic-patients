@@ -184,7 +184,7 @@ export default function DisplayData() {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          `http://localhost:3000/patient/getPatientDetails/${patientId}`
+          process.env.BASE_URL+`/patient/getPatientDetails/${patientId}`
         );
         setData(response.data);
       } catch (error) {

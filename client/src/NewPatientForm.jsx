@@ -20,7 +20,7 @@ const NewPatientForm = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    const response = await axios.post('http://localhost:3000/patient/newPatient',{formData});
+    const response = await axios.post(process.env.BASE_URL+'patient/newPatient',{formData});
     // Handle form submission logic here
     console.log('Form submitted:', response);
   };
