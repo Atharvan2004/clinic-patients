@@ -130,7 +130,7 @@ export default function PersistentDrawerLeft() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post(process.env.BASE_URL+'/patient/getPatient', { query: searchValue });
+      const response = await axios.post('/patient/getPatient', { query: searchValue });
       // Handle the response as needed
       await searchResultList.push(response.data.patientList);
       
