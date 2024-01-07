@@ -8,7 +8,7 @@
     "dev": "nodemon index.js",
     "client": "cd .\\client && npm run dev",
     "initiate": "cd .\\client && npm run build && cd .. && npm run dev",
-    "build":"cd client && npm i && npm run build"
+    "build":"npm i && cd client && npm i && npm run build"
   },
   "type": "module",
   "author": "",
