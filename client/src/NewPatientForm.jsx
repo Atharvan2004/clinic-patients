@@ -22,6 +22,7 @@ const NewPatientForm = () => {
     e.preventDefault();
     const response = await axios.post('patient/newPatient',{formData});
     // Handle form submission logic here
+    alert("Patient Created")
     console.log('Form submitted:', response);
   };
 

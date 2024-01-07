@@ -153,6 +153,7 @@ export default function CustomizedAccordions() {
       );
       console.log(formData)
       // Handle form submission logic here
+      alert("Report created")
       console.log("Form submitted:", response);
     } catch (error) {
       console.error("Error submitting form:", formData);
