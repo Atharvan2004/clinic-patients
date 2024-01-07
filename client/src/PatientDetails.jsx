@@ -19,6 +19,7 @@ import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import baseURL from "../port.js";
 
 const PatientDetails = ({ patient }) => (
   <Card style={{ margin: "10px 0" }}>
@@ -184,7 +185,7 @@ export default function DisplayData() {
     const fetchData = async () => {
       try {
         const response = await axios.post(
-          `/patient/getPatientDetails/${patientId}`
+          `${baseURL}/patient/getPatientDetails/${patientId}`
         );
         setData(response.data);
       } catch (error) {

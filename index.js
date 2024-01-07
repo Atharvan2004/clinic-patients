@@ -15,13 +15,13 @@ dotenv.config();
 const app = express();
 const port =process.env.PORT  || 3000;
 await conn();
+app.use(cors());
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
 app.use(express.json());
 app.use("/patient", PRouter);
-app.use(cors());
 app.use(express.static(path.join(__dirname,'/client/dist')));
 app.use(bodyParser.urlencoded({ extended: true }));
 

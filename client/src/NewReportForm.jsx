@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { TextField, Button, Paper, Grid, Container } from "@mui/material";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import baseURL from "../port.js";
 
 const Accordion = styled((props) => (
   <MuiAccordion  elevation={0}  {...props} />
@@ -142,7 +143,7 @@ export default function CustomizedAccordions() {
     
     try {
       const response = await axios.post(
-        `/patient/createReport/new/${patientId}`,
+        `${baseURL}/patient/createReport/new/${patientId}`,
         {formData: formData },
         {
           headers: {

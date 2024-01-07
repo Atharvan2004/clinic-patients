@@ -23,6 +23,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import SearchIcon from '@mui/icons-material/Search';
 import { Button, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import baseURL from "../port.js";
 
 const drawerWidth = 240;
 const searchResultList=[]
@@ -130,7 +131,7 @@ export default function PersistentDrawerLeft() {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post('/patient/getPatient', { query: searchValue });
+      const response = await axios.post(`${baseURL}/patient/getPatient`, { query: searchValue });
       // Handle the response as needed
       await searchResultList.push(response.data.patientList);
       
