@@ -143,7 +143,7 @@ export default function CustomizedAccordions() {
     try {
       const response = await axios.post(
         `/patient/createReport/new/${patientId}`,
-        { formData },
+        {formData: formData },
         {
           headers: {
             'Content-Type': 'application/json',
