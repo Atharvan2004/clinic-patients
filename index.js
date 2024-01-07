@@ -27,5 +27,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get("*", (req, res) => {
-    res.sendFile("C:\\Users\\athar\\Codes\\clinic-patients\\client\\dist\\index.html")
+    res.sendFile(path.join(__dirname,'/client/dist/index.html'))
 });
