@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "client": "cd .\\client && npm run dev",
-    "initiate": "cd .\\client && npm run build && cd .. && npm run dev",
+    "client": "cd client && npm run dev",
+    "initiate": "cd client && npm run build && cd .. && npm run dev",
     "build":"npm i && cd client && npm i && npm run build"
   },
   "type": "module",
