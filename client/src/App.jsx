@@ -9,7 +9,6 @@ import SearchResult from './SearchResult.jsx';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import DisplayData from './PatientDetails.jsx';
 
-
 export default function App() {
   return (
     <Router>

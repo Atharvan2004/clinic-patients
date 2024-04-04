@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Button } from "@material-tailwind/react";
 
 function MedicalReportForm() {
   const [formData, setFormData] = useState({
@@ -123,11 +124,13 @@ function MedicalReportForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(`http://localhost:3000/patient/createReport/new/${patientId}`, {
-      formData: formData,
-    }).catch(e=>{
-      console.log(e+" d")
-    });
+    await axios
+      .post(`http://localhost:3000/patient/createReport/new/${patientId}`, {
+        formData: formData,
+      })
+      .catch((e) => {
+        console.log(e + " d");
+      });
     console.log(formData);
   };
 
@@ -144,7 +147,16 @@ function MedicalReportForm() {
             onChange={(e) =>
               handleNestedChange(index, "symptom", e.target.value, "symptom")
             }
-            style={{ marginBottom: "5px" }}
+            style={{
+              marginBottom: "8px",
+              padding: "4px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              fontSize: "14px",
+              // Adjust width as needed
+              boxSizing: "border-box", // Ensure padding and border don't increase width
+            }}
           />
           <br />
           <label htmlFor={`duration_${index}`}>Duration: </label>
@@ -156,17 +168,27 @@ function MedicalReportForm() {
             onChange={(e) =>
               handleNestedChange(index, "duration", e.target.value, "symptom")
             }
-            style={{ width: "50%", marginBottom: "10px" }}
+            style={{
+              marginBottom: "8px",
+              padding: "4px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              fontSize: "14px",
+              // Adjust width as needed
+              boxSizing: "border-box", // Ensure padding and border don't increase width
+            }}
           />
         </div>
       ))}
-      <button
-        style={{ padding: "5px", marginTop: "10px" }}
-        type="button"
+      <Button
+        
+        className="mx-auto px-2 mt-3 mb-3 rounded-full"
         onClick={() => handleAddSymptom("symptom")}
+        variant="outlined"
       >
         Add Symptom
-      </button>
+      </Button>
       <br />
       <br />
 
@@ -177,7 +199,16 @@ function MedicalReportForm() {
         name="previousHistory"
         value={formData.previousHistory}
         onChange={handleChange}
-        style={{ marginBottom: "10px" }}
+        style={{
+          marginBottom: "8px",
+          padding: "4px",
+          borderRadius: "5px",
+          border: "1px solid #ccc",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          fontSize: "14px",
+          // Adjust width as needed
+          boxSizing: "border-box", // Ensure padding and border don't increase width
+        }}
       />
       <br />
       <br />
@@ -189,7 +220,16 @@ function MedicalReportForm() {
         name="previousTreatment"
         value={formData.previousTreatment}
         onChange={handleChange}
-        style={{ marginBottom: "10px" }}
+        style={{
+          marginBottom: "8px",
+          padding: "4px",
+          borderRadius: "5px",
+          border: "1px solid #ccc",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          fontSize: "14px",
+          // Adjust width as needed
+          boxSizing: "border-box", // Ensure padding and border don't increase width
+        }}
       />
       <br />
       <br />
@@ -201,7 +241,16 @@ function MedicalReportForm() {
         name="visheshaParikshan"
         value={formData.visheshaParikshan}
         onChange={handleChange}
-        style={{ marginBottom: "10px" }}
+        style={{
+          marginBottom: "8px",
+          padding: "4px",
+          borderRadius: "5px",
+          border: "1px solid #ccc",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          fontSize: "14px",
+          // Adjust width as needed
+          boxSizing: "border-box", // Ensure padding and border don't increase width
+        }}
       />
       <br />
       <br />
@@ -217,7 +266,16 @@ function MedicalReportForm() {
               name={key}
               value={value}
               onChange={handleSadyovrittamChange}
-              style={{ marginBottom: "5px" }}
+              style={{
+                marginBottom: "8px",
+                padding: "4px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                fontSize: "14px",
+                // Adjust width as needed
+                boxSizing: "border-box", // Ensure padding and border don't increase width
+              }}
             />
           </div>
         ))}
@@ -235,7 +293,16 @@ function MedicalReportForm() {
               name={key}
               value={value}
               onChange={handleSamanyaParikshaChange}
-              style={{ marginBottom: "5px" }}
+              style={{
+                marginBottom: "8px",
+                padding: "4px",
+                borderRadius: "5px",
+                border: "1px solid #ccc",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                fontSize: "14px",
+                // Adjust width as needed
+                boxSizing: "border-box", // Ensure padding and border don't increase width
+              }}
             />
           </div>
         ))}
@@ -259,7 +326,16 @@ function MedicalReportForm() {
                 "aushadhi_chikitsa"
               )
             }
-            style={{ marginBottom: "5px" }}
+            style={{
+              marginBottom: "8px",
+              padding: "4px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              fontSize: "14px",
+              // Adjust width as needed
+              boxSizing: "border-box", // Ensure padding and border don't increase width
+            }}
           />
           <br />
           <label htmlFor={`duration_${index}`}>Duration: </label>
@@ -276,17 +352,29 @@ function MedicalReportForm() {
                 "aushadhi_chikitsa"
               )
             }
-            style={{ marginBottom: "10px" }}
+            style={{
+              marginBottom: "8px",
+              padding: "4px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              fontSize: "14px",
+              // Adjust width as needed
+              boxSizing: "border-box", // Ensure padding and border don't increase width
+            }}
           />
         </div>
       ))}
-      <button
-        type="button"
-        style={{ padding: "5px", marginTop: "10px" }}
+
+      <Button
+        
+        className="mx-auto px-2 mt-3 mb-3 rounded-full"
         onClick={() => handleAddItem("aushadhi_chikitsa")}
+        variant="outlined"
       >
         Add Aushadhi
-      </button>
+      </Button>
+
       <br />
       <br />
 
@@ -297,7 +385,16 @@ function MedicalReportForm() {
         name="chikitsa_kalam"
         value={formData.chikitsa_kalam}
         onChange={handleChange}
-        style={{ marginBottom: "10px" }}
+        style={{
+          marginBottom: "8px",
+          padding: "4px",
+          borderRadius: "5px",
+          border: "1px solid #ccc",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          fontSize: "14px",
+          // Adjust width as needed
+          boxSizing: "border-box", // Ensure padding and border don't increase width
+        }}
       />
       <br />
       <br />
@@ -318,7 +415,16 @@ function MedicalReportForm() {
                 "panchkarma"
               )
             }
-            style={{ marginBottom: "5px" }}
+            style={{
+              marginBottom: "8px",
+              padding: "4px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              fontSize: "14px",
+              // Adjust width as needed
+              boxSizing: "border-box", // Ensure padding and border don't increase width
+            }}
           />
           <br />
           <label htmlFor={`duration_${index}`}>Duration: </label>
@@ -335,31 +441,34 @@ function MedicalReportForm() {
                 "panchkarma"
               )
             }
-            style={{ marginBottom: "10px" }}
+            style={{
+              marginBottom: "8px",
+              padding: "4px",
+              borderRadius: "5px",
+              border: "1px solid #ccc",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              fontSize: "14px",
+              // Adjust width as needed
+              boxSizing: "border-box", // Ensure padding and border don't increase width
+            }}
           />
         </div>
       ))}
-      <button
-        type="button"
-        style={{ padding: "5px", marginTop: "10px" }}
+      <Button
+        
+        className="mx-auto px-2 mt-3 mb-3 rounded-full"
         onClick={() => handleAddSymptom("panchkarma")}
+        variant="outlined"
       >
         Add Panchkarma
-      </button>
+      </Button>
       <br />
       <br />
-
-      <button
-        style={{
-          marginLeft: "40%",
-          width: "20%",
-          padding: "10px",
-          fontSize: "15px",
-        }}
-        type="submit"
-      >
-        Submit
-      </button>
+      <div className="flex justify-center">
+        <Button type="submit" className="mx-auto px-4 mb-5" variant="outlined">
+          Submit
+        </Button>
+      </div>
     </form>
   );
 }
