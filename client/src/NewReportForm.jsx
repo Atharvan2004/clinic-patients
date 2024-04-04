@@ -1,321 +1,367 @@
-import { styled } from "@mui/material/styles";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import MuiAccordion from "@mui/material/Accordion";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
-import { TextField, Button, Paper, Grid, Container } from "@mui/material";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import baseURL from "../port.js";
 
-const Accordion = styled((props) => (
-  <MuiAccordion  elevation={0}  {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  margin:"10px 0",
-  "&:not(:last-child)": {
-    borderBottom: 0,
-  },
-  "&::before": {
-    display: "none",
-  },
-}));
-
-const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? "rgba(255, 255, 255, .05)"
-      : "rgba(0, 0, 0, .03)",
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
-  },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));
-
-export default function CustomizedAccordions() {
-  const [expanded, setExpanded] = React.useState("");
-  const [formData, setFormData] = React.useState({
-    symptom: [],
-    previousHistory: '',
-    previousTreatment: '',
-    visheshaParikshan: '',
+function MedicalReportForm() {
+  const [formData, setFormData] = useState({
+    date: new Date(),
+    symptom: [{ symptom: "", duration: "" }],
+    previousHistory: "",
+    previousTreatment: "",
+    visheshaParikshan: "",
     sadyovrittam: {
-      mala_pravritti: '',
-      mutra_pravritti: '',
-      analam: '',
-      nidra: '',
-      artavam: '',
-      aharam: '',
-      viharam: '',
-      satmya: '',
-      manovastha: '',
-      raja_pravritti: '',
-      lmp: '',
-      edd: '',
+      mala_pravritti: "",
+      mutra_pravritti: "",
+      analam: "",
+      nidra: "",
+      artavam: "",
+      aharam: "",
+      viharam: "",
+      satmya: "",
+      manovastha: "",
+      raja_pravritti: "",
+      lmp: "",
+      edd: "",
     },
     samanya_pariksha: {
-      jivha: '',
-      netram: '',
-      nakham: '',
-      bharam: '',
-      nadi: '',
-      rakta_bharam: '',
-      twak: '',
-      rugnavastha: '',
-      doshavastha: '',
-      doshasthanam: '',
-      dooshyavikriti: '',
-      sambhavya_vyadhi: '',
+      jivha: "",
+      netram: "",
+      nakham: "",
+      bharam: "",
+      nadi: "",
+      rakta_bharam: "",
+      twak: "",
+      rugnavastha: "",
+      doshavastha: "",
+      doshasthanam: "",
+      dooshyavikriti: "",
+      sambhavya_vyadhi: "",
     },
-    aushadhi_chikitsa: [],
-    chikitsa_kalam: '',
-    panchkarma: [],
+    aushadhi_chikitsa: [{ aushadhi: "", duration: "" }],
+    chikitsa_kalam: "",
+    panchkarma: [{ panchkarma: "", duration: "" }],
   });
-  
-  // rest of your component
-  
-  
-  const handleValueChange = (e) => {
+
+  const { patientId } = useParams();
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-  
-    if (name === 'symptom' || name === 'aushadhi_chikitsa' || name === 'panchkarma') {
-      // If the field is an array, split the input value by commas and trim each element
-      const valuesArray = value.split(',').map((item) => item.trim());
-  
-      // Update the formData
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: valuesArray,
-      }));
-    } else if (name.includes('.')) {
-      // Split the name into sections
-      const [section, field] = name.split('.');
-  
-      // Update the formData
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [section]: {
-          ...prevFormData[section],
-          [field]: value,
-        },
-      }));
-    } else if (name.includes('.')) {
-      // Split the name into sections
-      const [section, field] = name.split('.');
-  
-      // Update the formData
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [section]: {
-          ...prevFormData[section],
-          [field]: value,
-        },
-      }));
-    } else {
-      // For other fields, continue with the original logic
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
-    }
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
-  let {patientId}=useParams();
-  
-  
+
+  const handleNestedChange = (index, field, value, type) => {
+    const updatedFormData = { ...formData };
+    updatedFormData[type][index][field] = value;
+    setFormData(updatedFormData);
+  };
+
+  const handleAddItem = (type) => {
+    setFormData({
+      ...formData,
+      [type]: [...formData[type], { aushadhi: "", duration: "" }],
+    });
+  };
+
+  const handleAddSymptom = (type) => {
+    setFormData({
+      ...formData,
+      [type]: [...formData[type], { [type]: "", duration: "" }],
+    });
+  };
+
+  // const handleSymptomChange = (index, value) => {
+  //   const updatedSymptoms = [...formData.symptom];
+  //   updatedSymptoms[index] = value;
+  //   setFormData({
+  //     ...formData,
+  //     symptom: updatedSymptoms
+  //   });
+  // };
+
+  // const handleAushadhiChange = (index, value) => {
+  //   const updatedAushadhi = [...formData.aushadhi_chikitsa];
+  //   updatedAushadhi[index] = value;
+  //   setFormData({
+  //     ...formData,
+  //     aushadhi_chikitsa: updatedAushadhi
+  //   });
+  // };
+
+  // const handlePanchkarmaChange = (index, value) => {
+  //   const updatedPanchkarma = [...formData.panchkarma];
+  //   updatedPanchkarma[index] = value;
+  //   setFormData({
+  //     ...formData,
+  //     panchkarma: updatedPanchkarma
+  //   });
+  // };
+
+  const handleSadyovrittamChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      sadyovrittam: {
+        ...formData.sadyovrittam,
+        [name]: value,
+      },
+    });
+  };
+
+  const handleSamanyaParikshaChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      samanya_pariksha: {
+        ...formData.samanya_pariksha,
+        [name]: value,
+      },
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    try {
-      const response = await axios.post(
-        `${baseURL}/patient/createReport/new/${patientId}`,
-        {formData: formData },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            // Add any other headers if needed
-          },
-        }
-      );
-      console.log(formData)
-      // Handle form submission logic here
-      alert("Report created")
-      console.log("Form submitted:", response);
-    } catch (error) {
-      console.error("Error submitting form:", formData);
-    }
-  };
-  
-
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
+    await axios.post(`http://localhost:3000/patient/createReport/new/${patientId}`, {
+      formData: formData,
+    }).catch(e=>{
+      console.log(e+" d")
+    });
+    console.log(formData);
   };
 
   return (
-    <div>
-      <Container component="main" maxWidth="xs">
-        <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
-          <Typography variant="h5" align="center" gutterBottom>
-            New Report Form
-          </Typography>
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  label="Symptoms"
-                  fullWidth
-                  variant="outlined"
-                  name="symptom"
-                  value={formData.symptom}
-                  onChange={handleValueChange}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Previous History"
-                  fullWidth
-                  variant="outlined"
-                  name="previousHistory"
-                  value={formData.previousHistory}
-                  onChange={handleValueChange}
-                  required
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Previous Treatment"
-                  fullWidth
-                  variant="outlined"
-                  name="previousTreatment"
-                  value={formData.previousTreatment}
-                  onChange={handleValueChange}
-                />
-              </Grid>
-              <Grid item xs={12} marginBottom={"10px"}>
-                <TextField
-                  label="Vishesha Parikshan"
-                  type="number"
-                  fullWidth
-                  variant="outlined"
-                  name="visheshaParikshan"
-                  value={formData.visheshaParikshan}
-                  onChange={handleValueChange}
-                  required
-                />
-              </Grid>
-            </Grid>
+    <form onSubmit={handleSubmit} style={{ padding: "12px" }}>
+      {formData.symptom.map((item, index) => (
+        <div key={index}>
+          <label htmlFor={`symptom_${index}`}>Symptom: </label>
+          <input
+            type="text"
+            id={`symptom_${index}`}
+            name={`symptom_${index}`}
+            value={item.symptom}
+            onChange={(e) =>
+              handleNestedChange(index, "symptom", e.target.value, "symptom")
+            }
+            style={{ marginBottom: "5px" }}
+          />
+          <br />
+          <label htmlFor={`duration_${index}`}>Duration: </label>
+          <input
+            type="text"
+            id={`duration_${index}`}
+            name={`duration_${index}`}
+            value={item.duration}
+            onChange={(e) =>
+              handleNestedChange(index, "duration", e.target.value, "symptom")
+            }
+            style={{ width: "50%", marginBottom: "10px" }}
+          />
+        </div>
+      ))}
+      <button
+        style={{ padding: "5px", marginTop: "10px" }}
+        type="button"
+        onClick={() => handleAddSymptom("symptom")}
+      >
+        Add Symptom
+      </button>
+      <br />
+      <br />
 
-            <Accordion
-              expanded={expanded === "panel1"}
-              onChange={handleChange("panel1")}
-            >
-              <AccordionSummary
-                aria-controls="panel1d-content"
-                id="panel1d-header"
-              >
-                <Typography marginLeft={"auto"} marginRight={"auto"}>
-                  SadyoVrittam
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {/* Fields related to sadyovrittam */}
-                {Object.keys(formData.sadyovrittam).map((field) => (
-                  <Grid item xs={12} key={`sadyovrittam_${field}`}>
-                    <TextField
-                      label={field.replace(/_/g, " ")}
-                      fullWidth
-                      variant="outlined"
-                      name={`sadyovrittam.${field}`}
-                      value={formData.sadyovrittam[field]}
-                      onChange={handleValueChange}
-                    />
-                  </Grid>
-                ))}
-              </AccordionDetails>
-            </Accordion>
+      <label htmlFor="previousHistory">Previous History: </label>
+      <input
+        type="text"
+        id="previousHistory"
+        name="previousHistory"
+        value={formData.previousHistory}
+        onChange={handleChange}
+        style={{ marginBottom: "10px" }}
+      />
+      <br />
+      <br />
 
-            <Accordion
-              expanded={expanded === "panel2"}
-              onChange={handleChange("panel2")}
-            >
-              <AccordionSummary
-                aria-controls="panel2d-content"
-                id="panel2d-header"
-              >
-                <Typography marginLeft={"auto"} marginRight={"auto"}>
-                  Samanya Pariksha
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                
-                {Object.keys(formData.samanya_pariksha).map((field) => (
-                  <Grid item xs={12} key={`samanya_pariksha_${field}`}>
-                    <TextField
-                      label={field.replace(/_/g, " ")}
-                      fullWidth
-                      variant="outlined"
-                      name={`samanya_pariksha.${field}`}
-                      value={formData.samanya_pariksha[field]}
-                      onChange={handleValueChange}
-                    />
-                  </Grid>
-                ))}
-              </AccordionDetails>
-            </Accordion>
-            <Grid item xs={12} marginBottom={"10px"}>
-                <TextField
-                  label="Aushadhi Chikitsa"
-                  fullWidth
-                  variant="outlined"
-                  name="aushadhi_chikitsa"
-                  value={formData.aushadhi_chikitsa}
-                  onChange={handleValueChange}
-                  
-                />
-              </Grid>
-              <Grid item xs={12} marginBottom={"10px"}>
-                <TextField
-                  label="Chikitsa Kalam"
-                  fullWidth
-                  variant="outlined"
-                  name="chikitsa_kalam"
-                  value={formData.chikitsa_kalam}
-                  onChange={handleValueChange}
-                />
-              </Grid>
-              <Grid item xs={12} marginBottom={"10px"}>
-                <TextField
-                  label="Panchkarma"
-                  fullWidth
-                  variant="outlined"
-                  name="panchkarma"
-                  value={formData.panchkarma}
-                  onChange={handleValueChange}
-                />
-              </Grid>
+      <label htmlFor="previousTreatment">Previous Treatment: </label>
+      <input
+        type="text"
+        id="previousTreatment"
+        name="previousTreatment"
+        value={formData.previousTreatment}
+        onChange={handleChange}
+        style={{ marginBottom: "10px" }}
+      />
+      <br />
+      <br />
 
-            <Button type="submit" style={{marginTop:"10px"}} fullWidth variant="contained" color="primary">
-              Submit
-            </Button>
-          </form>
-        </Paper>
-      </Container>
-    </div>
+      <label htmlFor="visheshaParikshan">Vishesha Parikshan: </label>
+      <input
+        type="number"
+        id="visheshaParikshan"
+        name="visheshaParikshan"
+        value={formData.visheshaParikshan}
+        onChange={handleChange}
+        style={{ marginBottom: "10px" }}
+      />
+      <br />
+      <br />
+
+      <fieldset style={{ marginBottom: "15px" }}>
+        <legend style={{ marginLeft: "35%" }}>Sadyovrittam</legend>
+        {Object.entries(formData.sadyovrittam).map(([key, value]) => (
+          <div key={key} style={{ paddingTop: "5px" }}>
+            <label htmlFor={key}>{key.replace(/_/g, " ")}: </label>
+            <input
+              type="text"
+              id={key}
+              name={key}
+              value={value}
+              onChange={handleSadyovrittamChange}
+              style={{ marginBottom: "5px" }}
+            />
+          </div>
+        ))}
+      </fieldset>
+      <br />
+
+      <fieldset style={{ marginBottom: "15px" }}>
+        <legend style={{ marginLeft: "27%" }}>Samanya Pariksha</legend>
+        {Object.entries(formData.samanya_pariksha).map(([key, value]) => (
+          <div key={key} style={{ paddingTop: "5px" }}>
+            <label htmlFor={key}>{key.replace(/_/g, " ")}: </label>
+            <input
+              type="text"
+              id={key}
+              name={key}
+              value={value}
+              onChange={handleSamanyaParikshaChange}
+              style={{ marginBottom: "5px" }}
+            />
+          </div>
+        ))}
+      </fieldset>
+      <br />
+
+      {/* Aushadhi Chikitsa fields */}
+      {formData.aushadhi_chikitsa.map((item, index) => (
+        <div key={index}>
+          <label htmlFor={`aushadhi_${index}`}>Aushadhi: </label>
+          <input
+            type="text"
+            id={`aushadhi_${index}`}
+            name={`aushadhi_${index}`}
+            value={item.aushadhi}
+            onChange={(e) =>
+              handleNestedChange(
+                index,
+                "aushadhi",
+                e.target.value,
+                "aushadhi_chikitsa"
+              )
+            }
+            style={{ marginBottom: "5px" }}
+          />
+          <br />
+          <label htmlFor={`duration_${index}`}>Duration: </label>
+          <input
+            type="text"
+            id={`duration_${index}`}
+            name={`duration_${index}`}
+            value={item.duration}
+            onChange={(e) =>
+              handleNestedChange(
+                index,
+                "duration",
+                e.target.value,
+                "aushadhi_chikitsa"
+              )
+            }
+            style={{ marginBottom: "10px" }}
+          />
+        </div>
+      ))}
+      <button
+        type="button"
+        style={{ padding: "5px", marginTop: "10px" }}
+        onClick={() => handleAddItem("aushadhi_chikitsa")}
+      >
+        Add Aushadhi
+      </button>
+      <br />
+      <br />
+
+      <label htmlFor="previousHistory">Chikitsa Kalam: </label>
+      <input
+        type="text"
+        id="chikitsa_kalam"
+        name="chikitsa_kalam"
+        value={formData.chikitsa_kalam}
+        onChange={handleChange}
+        style={{ marginBottom: "10px" }}
+      />
+      <br />
+      <br />
+
+      {formData.panchkarma.map((item, index) => (
+        <div key={index}>
+          <label htmlFor={`panchkarma_${index}`}>Panchkarma: </label>
+          <input
+            type="text"
+            id={`panchkarma_${index}`}
+            name={`panchkarma_${index}`}
+            value={item.panchkarma}
+            onChange={(e) =>
+              handleNestedChange(
+                index,
+                "panchkarma",
+                e.target.value,
+                "panchkarma"
+              )
+            }
+            style={{ marginBottom: "5px" }}
+          />
+          <br />
+          <label htmlFor={`duration_${index}`}>Duration: </label>
+          <input
+            type="text"
+            id={`duration_${index}`}
+            name={`duration_${index}`}
+            value={item.duration}
+            onChange={(e) =>
+              handleNestedChange(
+                index,
+                "duration",
+                e.target.value,
+                "panchkarma"
+              )
+            }
+            style={{ marginBottom: "10px" }}
+          />
+        </div>
+      ))}
+      <button
+        type="button"
+        style={{ padding: "5px", marginTop: "10px" }}
+        onClick={() => handleAddSymptom("panchkarma")}
+      >
+        Add Panchkarma
+      </button>
+      <br />
+      <br />
+
+      <button
+        style={{
+          marginLeft: "40%",
+          width: "20%",
+          padding: "10px",
+          fontSize: "15px",
+        }}
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
   );
 }
+
+export default MedicalReportForm;

@@ -5,13 +5,17 @@ const reportSchema = new mongoose.Schema({
     date: {
         type: Date
     },
-    symptom: [String],
+    symptom:[
+        {
+            symptom:String,
+            duration:String
+        }
+    ],
     previousHistory: String,
     previousTreatment: String,
     visheshaParikshan: Number,
 
     sadyovrittam: {
-
         mala_pravritti: String,
         mutra_pravritti: String,
         analam: String,
@@ -24,11 +28,10 @@ const reportSchema = new mongoose.Schema({
         raja_pravritti: String,
         lmp: String,
         edd: String,
-
     },
 
     samanya_pariksha: {
-
+ 
         jivha: String,
         netram: String,
         nakham: String,
@@ -44,9 +47,20 @@ const reportSchema = new mongoose.Schema({
 
     },
 
-    aushadhi_chikitsa: [String],
+    aushadhi_chikitsa: [
+        {
+            aushadhi:String,
+            duration:String
+        }
+    ],
+
     chikitsa_kalam: String,
-    panchkarma: [String]
+    panchkarma: [
+        {
+            panchkarma:String,
+            duration:String
+        }
+    ],
 
 })
 

@@ -25,13 +25,19 @@ const PatientDetails = ({ patient }) => (
   <Card style={{ margin: "10px 0" }}>
     <CardContent style={{ padding: "5px 15px" }}>
       <Typography variant="h6">{patient.name}</Typography>
-      <div style={{display:"flex",justifyContent:"space-between", alignItems:"center"}} >
-      <Typography>{`Age: ${patient.age}`}</Typography>
-      <Typography marginRight={"10px"} align="right" fontSize={"small"}>
-        {patient.occupation}
-      </Typography>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography>{`Age: ${patient.age}`}</Typography>
+        <Typography marginRight={"10px"} align="right" fontSize={"small"}>
+          {patient.occupation}
+        </Typography>
       </div>
-      
+
       <Typography>{`Address: ${patient.address}`}</Typography>
       <Typography>{`Phone: ${patient.phone}`}</Typography>
     </CardContent>
@@ -61,8 +67,8 @@ function ReportDetails({ report }) {
             <Typography variant="subtitle2">{`Date: ${new Date(
               report.date
             ).toLocaleDateString()}`}</Typography>
-            <Typography style={{marginLeft:"50px"}} variant="subtitle2">
-              Chikitsa Kalam: {report.previousHistory}
+            <Typography style={{ marginLeft: "50px" }} variant="subtitle2">
+              Chikitsa Kalam: {report.chikitsa_kalam}
             </Typography>
           </div>
         </AccordionSummary>
@@ -81,50 +87,67 @@ function ReportDetails({ report }) {
           </div>
 
           <Divider style={{ margin: "10px 0" }} />
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <Typography variant="h6" style={{ fontSize: "medium" }}>
               Symptoms:
             </Typography>
-            <Typography
-              style={{ justifyContent: "center", textAlign: "center" }}
-            >
-              - {report.symptom.join(", ")}
-            </Typography>
+
+            {report.symptom.map((item, index) => (
+              <Typography key={index} style={{ marginLeft: "5px" }}>
+                {index + 1}. {item.symptom}: {item.duration}
+              </Typography>
+            ))}
           </div>
 
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{margin: "10px 0", display: "flex"}}>
             <Typography variant="h6" style={{ fontSize: "medium" }}>
-              Previous History:
+              Previous History:   
             </Typography>
-            <Typography>- {report.previousHistory}</Typography>
+            <Typography style={{marginRight:"5px",textAlign:"right"}}>   {report.previousHistory}</Typography>
           </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
+
+          <div style={{margin: "10px 0", display: "flex" }}>
             <Typography variant="h6" style={{ fontSize: "medium" }}>
               Previous Treatment:
             </Typography>
-            <Typography>- {report.previousTreatment}</Typography>
+            <Typography style={{marginRight:"5px",textAlign:"right"}}> {report.previousTreatment}</Typography>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              margin: "10px 0",
+            }}
+          >
             <Typography variant="h6" style={{ fontSize: "medium" }}>
-              Panchakarma:
+              Panchkarma:
             </Typography>
-            <Typography>
-              {report.panchkarma.length == 0
-                ? "none"
-                : report.panchkarma.join(", ")}
-            </Typography>
+
+            {report.panchkarma.map((item, index) => (
+              <Typography key={index} style={{ marginLeft: "5px" }}>
+                {index + 1}. {item.panchkarma}: {item.duration}
+              </Typography>
+            ))}
           </div>
+
           <br />
 
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div style={{paddingRight:"5px"}}>
-              <Typography variant="h6" style={{ fontSize: "medium"}}>Sadyovrittam</Typography>
+            <div style={{ paddingRight: "5px" }}>
+              <Typography variant="h6" style={{ fontSize: "medium" }}>
+                Sadyovrittam
+              </Typography>
               {Object.keys(report.sadyovrittam).map((field) => {
                 return (
                   <Typography
                     key={field}
-                    style={{ fontSize: "small", fontFamily: "Gill Sans"}}
+                    style={{ fontSize: "small", fontFamily: "Gill Sans" }}
                     variant="body1"
                   >
                     {field.charAt(0).toUpperCase() + field.slice(1)}:{" "}
@@ -137,7 +160,9 @@ function ReportDetails({ report }) {
             </div>
 
             <div>
-              <Typography variant="h6" style={{ fontSize: "medium" }}>Samanya Pariksha</Typography>
+              <Typography variant="h6" style={{ fontSize: "medium" }}>
+                Samanya Pariksha
+              </Typography>
               {Object.keys(report.samanya_pariksha).map((field) => {
                 return (
                   <Typography
@@ -163,12 +188,6 @@ function ReportDetails({ report }) {
             <Typography>- {report.previousHistory}</Typography>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Typography variant="h6" style={{ fontSize: "medium" }}>
-              Previous History:
-            </Typography>
-            <Typography>- {report.previousHistory}</Typography>
-          </div>
 
           {/* Add more fields as needed */}
         </AccordionDetails>
