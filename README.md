@@ -1,4 +1,4 @@
-# Chaitanya Clinic Patient Management System
+# MediSync – Patient Record Management System
 
 Welcome to the Chaitanya Clinic Patient Management System repository! This system is designed to help manage patient data and reports for ease of access and organization.
 ## Note about Deployment
@@ -12,7 +12,7 @@ Please note that this application is currently deployed on the free tier of rend
 
 ## Getting Started
 
-To get started with the Chaitanya-Clinic Patient Management System, follow these steps:
+To get started with the MediSync Patient Record Management System, follow these steps:
 
 1. **Clone the Repository:** Clone this repository to your local machine using `git clone`.
 
