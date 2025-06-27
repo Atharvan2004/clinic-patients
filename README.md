@@ -1,6 +1,7 @@
 # MediSync – Patient Record Management System
 
 Welcome to the Chaitanya Clinic Patient Management System repository! This system is designed to help manage patient data and reports for ease of access and organization.
+Check it out - https://chaitanya-clinic.onrender.com/
 ## Note about Deployment
 
 Please note that this application is currently deployed on the free tier of render.com. Due to the limitations of the free tier, there may be occasional issues with accessing the deployed live website, such as slow loading times or temporary downtimes. We apologize for any inconvenience this may cause and appreciate your patience and understanding.
